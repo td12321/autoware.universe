@@ -515,8 +515,8 @@ autoware_auto_control_msgs::msg::AckermannControlCommand VehicleCmdGate::createS
 {
   autoware_auto_control_msgs::msg::AckermannControlCommand cmd;
   cmd.stamp = this->now();
-  cmd.lateral.front_steering_tire_angle = current_steer_;
-  cmd.lateral.front_steering_tire_rotation_rate = 0.0;
+  cmd.lateral.steering_tire_angle = current_steer_;
+  cmd.lateral.steering_tire_rotation_rate = 0.0;
   cmd.longitudinal.speed = 0.0;
   cmd.longitudinal.acceleration = stop_hold_acceleration_;
 
@@ -528,8 +528,8 @@ VehicleCmdGate::createEmergencyStopControlCmd() const
 {
   autoware_auto_control_msgs::msg::AckermannControlCommand cmd;
 
-  cmd.lateral.front_steering_tire_angle = prev_control_cmd_.lateral.front_steering_tire_angle;
-  cmd.lateral.front_steering_tire_rotation_rate = prev_control_cmd_.lateral.front_steering_tire_rotation_rate;
+  cmd.lateral.steering_tire_angle = prev_control_cmd_.lateral.steering_tire_angle;
+  cmd.lateral.steering_tire_rotation_rate = prev_control_cmd_.lateral.steering_tire_rotation_rate;
   cmd.longitudinal.speed = 0.0;
   cmd.longitudinal.acceleration = emergency_acceleration_;
 
@@ -579,7 +579,7 @@ void VehicleCmdGate::onEngageService(
 
 void VehicleCmdGate::onSteering(autoware_auto_vehicle_msgs::msg::SteeringReport::ConstSharedPtr msg)
 {
-  current_steer_ = msg->front_steering_tire_angle;
+  current_steer_ = msg->steering_tire_angle;
 }
 
 double VehicleCmdGate::getDt()
